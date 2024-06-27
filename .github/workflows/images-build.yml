@@ -19,6 +19,7 @@ on:
 env:
   DOCKER_USERNAME: "{{secrets.DOCKER_USER}}"
   DOCKER_REPOSITORY: "{{ secrets.DOCKER_REPOSITORY }}"
+  DOCKER_URL: "{{ secrets.DOCKER_URL }}"
   RED: \033[1;31m
   GREEN: \033[1;32m
   YELLOW: \033[1;33m
@@ -86,7 +87,7 @@ jobs:
       id: transferImage
       run: |
         DOCKER_IMAGE="${{ steps.pullIssuesPorter.outputs.DOCKER_IMAGE }}"
-        echo "MY_DOCKER_IMAGE_NAME=${{ env.DOCKER_REPOSITORY }}/$(echo ${DOCKER_IMAGE#*/} | sed "s@/@.@g;s@ @\n@g;")" >> $GITHUB_OUTPUT
+        echo "MY_DOCKER_IMAGE_NAME=${{ env.DOCKER_URL }}/${{ env.DOCKER_REPOSITORY }}/$(echo ${DOCKER_IMAGE#*/} | sed "s@/@.@g;s@ @\n@g;")" >> $GITHUB_OUTPUT
 
     - name: Sync image
       id: syncImage
@@ -113,6 +114,7 @@ jobs:
       uses: docker/login-action@v3
       if: ${{ steps.syncImage.outputs.SKOPEO_RESULT == 1 }}
       with:
+        registry: ${{ secrets.DOCKER_URL }}
         username: ${{ env.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 

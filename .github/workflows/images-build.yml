@@ -18,7 +18,7 @@ on:
 
 env:
   DOCKER_USERNAME: "{{secrets.DOCKER_USER}}"
-  DOCKER_REPOSITORY: "{{ secrets.DOCKER_REPOSITORY }}"
+  DOCKER_REPOSITORY: "custom01"
   DOCKER_URL: "registry.cn-hangzhou.aliyuncs.com"
   RED: \033[1;31m
   GREEN: \033[1;32m

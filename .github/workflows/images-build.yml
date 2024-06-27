@@ -115,7 +115,7 @@ jobs:
       if: ${{ steps.syncImage.outputs.SKOPEO_RESULT == 1 }}
       with:
         registry: registry.cn-hangzhou.aliyuncs.com
-        username: ${{ env.DOCKER_USERNAME }}
+        username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Pull image and push to docker hub
